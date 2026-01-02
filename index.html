@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Anniversary</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <!-- Floating Hearts Background -->
+  <div id="floatingHeartsContainer"></div>
+
+  <!-- Welcome Section -->
+  <header id="welcome" class="section">
+    <div class="center fade-in">
+      <h1>Happy 3rd Anniversary, My Love</h1>
+      <button id="enterBtn">Tap to Enter Our World</button>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- Our Story Timeline -->
+    <section id="timeline" class="section hidden fade-section">
+      <h2>Our Story</h2>
+      <div class="timeline-container" id="timelineContainer"></div>
+    </section>
+
+    <!-- Interactive Letter -->
+    <section id="letter" class="section hidden fade-section">
+      <h2>A Letter For You</h2>
+      <div id="letterContent" class="letter-box"></div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="section hidden fade-section">
+      <h2>Our Music</h2>
+      <div id="songList" class="song-list"></div>
+    </section>
+
+    <!-- Achievements -->
+    <section id="achievements" class="section hidden fade-section">
+      <h2>Your Achievements</h2>
+      <div class="achievements-container" id="achList"></div>
+    </section>
+
+    <!-- Time Capsule -->
+    <section id="timecapsule" class="section hidden fade-section">
+      <h2>Time Capsule</h2>
+      <div id="capsuleContent" class="capsule-box"></div>
+    </section>
+
+    <!-- Memory Gallery -->
+    <section id="gallery" class="section hidden fade-section">
+      <h2>Memory Gallery</h2>
+      <div id="galleryGrid" class="gallery-grid"></div>
+    </section>
+
+    <!-- Puzzle Section -->
+    <section id="puzzle" class="section hidden fade-section">
+      <h2>Surprise Puzzle</h2>
+      <p>Solve this to unlock your surprise:</p>
+      <div id="puzzleContainer" class="puzzle-container"></div>
+    </section>
+
+    <!-- Password-Protected Surprise Section -->
+    <section id="passwordSection" class="section hidden fade-section">
+      <h2>Secret Surprise</h2>
+      <p>Enter the password to unlock your final surprise.</p>
+      <input type="password" id="passwordInput" placeholder="Enter password..." />
+      <button id="passwordBtn">Unlock</button>
+      <p id="passwordError" class="error hidden">Incorrect password, my love. Try again ❤️</p>
+    </section>
+
+    <!-- Final Surprise Content (Hidden until password success) -->
+    <section id="secretContent" class="section hidden fade-section">
+      <h2>Your Secret Surprise</h2>
+      <p>This is something only meant for you, my love. Thank you for being my everything.</p>
+      <p>I love you endlessly, today and forever.</p>
+    </section>
+
+    <!-- Final Thank You Screen -->
+    <section id="final" class="section hidden fade-section">
+      <h2>Thank You for 3 Beautiful Years</h2>
+      <p>You mean the world to me.</p>
+      <p>Tap this NFC tag again next year for our next chapter.</p>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
