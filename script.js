@@ -407,10 +407,10 @@ const PhotoBooth = (() => {
   let isCapturing = false;
 
   const frames = [
-    { name: 'Classic', border: '#e8a0bf', caption: 'HAPPY VALENTINE\'S DAY', padding: 8 },
-    { name: 'Polaroid', border: '#fff', caption: '♡ with love ♡', padding: 10 },
-    { name: 'Vintage', border: '#d4a373', caption: '~ forever us ~', padding: 6 },
-    { name: 'Dreamy', border: '#c3aed6', caption: '✨ our moment ✨', padding: 8 }
+    { name: 'Love Hearts', border: '#ffcde0', style: 'hearts', padding: 25 },
+    { name: 'Vintage', border: '#8a8386', style: 'vintage', padding: 15 },
+    { name: 'Gold Stars', border: '#7f787b', style: 'stars', padding: 15 },
+    { name: 'Classic Dark', border: '#444', style: 'classic', padding: 15 }
   ];
 
   function init() {
@@ -421,9 +421,11 @@ const PhotoBooth = (() => {
     document.getElementById('photoUploadInput').addEventListener('change', handleUpload);
     document.getElementById('frameLeft').addEventListener('click', () => {
       currentFrame = (currentFrame - 1 + frames.length) % frames.length;
+      updateFrameUI();
     });
     document.getElementById('frameRight').addEventListener('click', () => {
       currentFrame = (currentFrame + 1) % frames.length;
+      updateFrameUI();
     });
     document.getElementById('filterToggle').addEventListener('click', toggleFilter);
     document.getElementById('boothGreenBtn').addEventListener('click', onGreenBtn);
@@ -433,6 +435,25 @@ const PhotoBooth = (() => {
     document.getElementById('btnRestart').addEventListener('click', restart);
     document.getElementById('scissorBtn').addEventListener('click', openScissorModal);
     document.getElementById('scissorCancel').addEventListener('click', closeScissorModal);
+
+    updateFrameUI();
+  }
+
+  function updateFrameUI() {
+    const frame = frames[currentFrame];
+    const frameEl = document.querySelector('.booth-display-frame');
+    if (frameEl) {
+      if (frame.border === '#fff') {
+        frameEl.style.borderColor = '#ccc'; // Need visible border on white bg
+      } else {
+        frameEl.style.borderColor = frame.border;
+      }
+    }
+    const label = document.getElementById('frameNameLabel');
+    if (label) {
+      label.textContent = frame.name.toUpperCase();
+      label.style.color = frame.border === '#fff' ? '#888' : frame.border;
+    }
   }
 
   async function startCamera() {
@@ -583,35 +604,121 @@ const PhotoBooth = (() => {
     const canvas = document.getElementById('photostripCanvas');
     const ctx = canvas.getContext('2d');
 
-    const photoW = 300, photoH = 225, captionH = 28;
+    const photoW = 300, photoH = 225; // 4:3 ratio
     const pad = frame.padding;
+    const spacing = frame.style === 'hearts' ? 15 : pad;
+
     canvas.width = photoW + pad * 2;
-    canvas.height = (photoH + captionH + pad) * 4 + pad;
+    canvas.height = photoH * 4 + spacing * 3 + pad * 2;
 
     ctx.fillStyle = frame.border;
     ctx.fillRect(0, 0, canvas.width, canvas.height);
 
+    // Doodles / Background decorations
+    if (frame.style === 'hearts') {
+      const emojis = ['🍒', '🎀', '💌', '✨', '💖', '🍭'];
+      ctx.font = '24px Arial';
+      for (let j = 0; j < 25; j++) {
+        const ex = Math.random() * canvas.width;
+        const ey = Math.random() * canvas.height;
+        ctx.save();
+        ctx.translate(ex, ey);
+        ctx.rotate((Math.random() - 0.5) * 0.5);
+        ctx.fillText(emojis[Math.floor(Math.random() * emojis.length)], 0, 0);
+        ctx.restore();
+      }
+    } else if (frame.style === 'vintage') {
+      const emojis = ['❤️', '❣️', '🎀'];
+      ctx.font = '18px Arial';
+      for (let j = 0; j < 15; j++) {
+        const ex = Math.random() * canvas.width;
+        const ey = Math.random() * canvas.height;
+        ctx.save();
+        ctx.translate(ex, ey);
+        ctx.rotate((Math.random() - 0.5) * 0.8);
+        ctx.globalAlpha = 0.8;
+        ctx.fillText(emojis[Math.floor(Math.random() * emojis.length)], 0, 0);
+        ctx.restore();
+      }
+    }
+
     let loaded = 0;
     photos.forEach((photo, i) => {
       const draw = () => {
-        const y = pad + i * (photoH + captionH + pad);
-        ctx.fillStyle = frame.border;
-        ctx.fillRect(pad, y, photoW, captionH);
-        ctx.fillStyle = frame.border === '#fff' ? '#888' : '#fff';
-        ctx.font = 'bold 11px Quicksand, sans-serif';
-        ctx.textAlign = 'center';
-        ctx.fillText(frame.caption.toUpperCase(), canvas.width / 2, y + 19);
+        const x = pad;
+        const y = pad + i * (photoH + spacing);
 
+        ctx.save();
+
+        // Draw frame border behind photo 
+        if (frame.style === 'stars' || frame.style === 'vintage' || frame.style === 'classic') {
+          ctx.fillStyle = '#111';
+          ctx.fillRect(x - 2, y - 2, photoW + 4, photoH + 4);
+          if (frame.style === 'vintage') {
+            ctx.strokeStyle = '#e2dfdf';
+            ctx.lineWidth = 1;
+            ctx.strokeRect(x - 1, y - 1, photoW + 2, photoH + 2);
+          }
+        }
+
+        // Masking shape
+        if (frame.style === 'hearts') {
+          const hw = photoW * 0.9;
+          const hh = photoH * 0.95;
+          const hx = x + (photoW - hw) / 2;
+          const hy = y + (photoH - hh) / 2;
+
+          ctx.beginPath();
+          const topCurveHeight = hh * 0.3;
+          ctx.moveTo(hx + hw / 2, hy + topCurveHeight);
+          ctx.bezierCurveTo(hx + hw / 2, hy, hx, hy, hx, hy + topCurveHeight);
+          ctx.bezierCurveTo(hx, hy + (hh + topCurveHeight) / 2, hx + hw / 2, hy + hh * 0.9, hx + hw / 2, hy + hh);
+          ctx.bezierCurveTo(hx + hw / 2, hy + hh * 0.9, hx + hw, hy + (hh + topCurveHeight) / 2, hx + hw, hy + topCurveHeight);
+          ctx.bezierCurveTo(hx + hw, hy, hx + hw / 2, hy, hx + hw / 2, hy + topCurveHeight);
+          ctx.closePath();
+
+          ctx.lineWidth = 6;
+          ctx.strokeStyle = '#c42b47';
+          ctx.stroke(); // Draw scribble outline
+
+          ctx.clip(); // Clip photo to heart
+        } else {
+          ctx.beginPath();
+          ctx.rect(x, y, photoW, photoH);
+          ctx.clip();
+        }
+
+        // Image Drawing
         if (isBW) {
           const tmp = document.createElement('canvas');
           tmp.width = photoW; tmp.height = photoH;
           const tc = tmp.getContext('2d');
           tc.filter = 'grayscale(100%) contrast(1.1)';
           tc.drawImage(photo, 0, 0, photoW, photoH);
-          ctx.drawImage(tmp, pad, y + captionH, photoW, photoH);
+          // Scale to fit cover based on image ratio
+          const scale = Math.max(photoW / photo.width, photoH / photo.height);
+          const dw = photo.width * scale, dh = photo.height * scale;
+          const dx = x + (photoW - dw) / 2, dy = y + (photoH - dh) / 2;
+          ctx.drawImage(tmp, 0, 0, photoW, photoH, dx, dy, dw, dh);
         } else {
-          ctx.drawImage(photo, pad, y + captionH, photoW, photoH);
+          const scale = Math.max(photoW / photo.width, photoH / photo.height);
+          const dw = photo.width * scale, dh = photo.height * scale;
+          const dx = x + (photoW - dw) / 2, dy = y + (photoH - dh) / 2;
+          ctx.drawImage(photo, dx, dy, dw, dh);
         }
+
+        ctx.restore();
+
+        // Draw overlays ON TOP of the photo
+        if (frame.style === 'stars') {
+          const emojis = ['⭐', '✨'];
+          ctx.font = '16px Arial';
+          ctx.fillText(emojis[0], x + 6, y + 20);
+          ctx.fillText(emojis[1], x + 24, y + 10);
+          ctx.fillText(emojis[1], x + photoW - 22, y + photoH - 12);
+          ctx.fillText(emojis[0], x + photoW - 36, y + photoH - 6);
+        }
+
         loaded++;
         if (loaded >= 4) showOutput();
       };
