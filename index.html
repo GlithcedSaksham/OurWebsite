@@ -1,94 +1,460 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Our Anniversary</title>
-  <link rel="stylesheet" href="styles.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>For You, My Love ❤️</title>
+  <meta name="description" content="A romantic Valentine's Day and Anniversary gift — made with love." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500;600;700&family=Caveat:wght@400;500;600;700&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
 
-  <!-- Floating Hearts Background -->
-  <div id="floatingHeartsContainer"></div>
+  <!-- ═══════════════════════════════════════════
+       BACKGROUND MUSIC
+       Replace music.mp3 with your own file
+  ═══════════════════════════════════════════ -->
+  <audio id="bgMusic" loop preload="auto">
+    <source src="assets/BgMusic.mp3" type="audio/mpeg" />
+  </audio>
+  <button class="music-toggle" id="musicToggle" aria-label="Toggle music">🎵</button>
 
-  <!-- Welcome Section -->
-  <header id="welcome" class="section">
-    <div class="center fade-in">
-      <h1>Happy 3rd Anniversary, My Love</h1>
-      <button id="enterBtn">Tap to Enter Our World</button>
+  <!-- ═══════════════════════════════════════════
+       SECTION 1: SLIDE TO UNLOCK SCREEN
+  ═══════════════════════════════════════════ -->
+  <div id="lock-screen" class="lock-screen">
+    <div class="lock-bg"></div>
+    <div class="lock-content">
+      <div class="lock-top">
+        <div class="lock-time" id="lock-time">9:41</div>
+        <div class="lock-date" id="lock-date">Wednesday, February 14</div>
+      </div>
+      <div class="lock-bottom">
+        <div class="slide-text">slide to unlock ❤️</div>
+        <div class="slide-groove">
+          <div class="slide-thumb" id="slide-thumb" role="button" aria-label="Slide to unlock">
+            <span class="thumb-heart">❤️</span>
+          </div>
+          <div class="slide-glow"></div>
+        </div>
+      </div>
     </div>
-  </header>
+  </div>
 
-  <main>
+  <!-- ═══════════════════════════════════════════
+       MAIN WEBSITE (hidden until unlocked)
+       Each section is a separate full-screen PAGE
+  ═══════════════════════════════════════════ -->
+  <div id="main-site" class="main-site hidden">
 
-    <!-- Our Story Timeline -->
-    <section id="timeline" class="section hidden fade-section">
-      <h2>Our Story</h2>
-      <div class="timeline-container" id="timelineContainer"></div>
+    <!-- FLOATING HEARTS BACKGROUND -->
+    <div class="floating-hearts-bg" aria-hidden="true" id="floatingHearts"></div>
+
+    <!-- BOTTOM NAVIGATION -->
+    <nav class="main-nav" id="mainNav">
+      <button class="nav-btn" data-page="intro-section" aria-label="Intro">💕</button>
+      <button class="nav-btn" data-page="home-section" aria-label="Home">🏠</button>
+      <button class="nav-btn" data-page="valentine-section" aria-label="Valentine">💌</button>
+      <button class="nav-btn" data-page="photobooth-section" aria-label="Photos">📸</button>
+      <button class="nav-btn" data-page="scratch-section" aria-label="Gifts">🎁</button>
+      <button class="nav-btn" data-page="anniversary-section" aria-label="Forever">💖</button>
+    </nav>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE 2: INTRO / LANDING
+    ═══════════════════════════════════════════ -->
+    <section id="intro-section" class="page intro-section">
+      <div class="page-inner">
+        <div class="intro-sparkle" aria-hidden="true">✨</div>
+        <h1 class="intro-title">To My Forever Love</h1>
+        <p class="intro-subtitle">Every moment with you is a beautiful chapter in our love story</p>
+        <div class="intro-heart-anim" aria-hidden="true">
+          <span class="big-heart">💗</span>
+        </div>
+        <button class="btn-romantic" id="exploreBtn">Begin Our Journey 💫</button>
+      </div>
     </section>
 
-    <!-- Interactive Letter -->
-    <section id="letter" class="section hidden fade-section">
-      <h2>A Letter For You</h2>
-      <div id="letterContent" class="letter-box"></div>
+    <!-- ═══════════════════════════════════════════
+         PAGE 3: HOME
+    ═══════════════════════════════════════════ -->
+    <section id="home-section" class="page home-section">
+      <div class="page-inner home-inner">
+        <!-- Background couple photo — replace src later -->
+        <div class="home-bg-photo">
+          <img src="couple-bg.jpg" alt="" />
+          <div class="home-bg-overlay"></div>
+        </div>
+
+        <h2 class="section-title">Our Love Menu 💕</h2>
+
+        <div class="home-grid">
+          <button class="home-card" data-page="valentine-section">
+            <span class="home-card-icon">💌</span>
+            <span class="home-card-label">Valentine Week</span>
+            <span class="home-card-desc">7 days of love letters</span>
+          </button>
+          <button class="home-card" data-page="photobooth-section">
+            <span class="home-card-icon">📸</span>
+            <span class="home-card-label">Photo Booth</span>
+            <span class="home-card-desc">Capture our moments</span>
+          </button>
+          <button class="home-card" data-page="scratch-section">
+            <span class="home-card-icon">🎁</span>
+            <span class="home-card-label">Surprise Cards</span>
+            <span class="home-card-desc">Scratch to reveal</span>
+          </button>
+          <button class="home-card" data-page="anniversary-section">
+            <span class="home-card-icon">💖</span>
+            <span class="home-card-label">Our Forever</span>
+            <span class="home-card-desc">A special message</span>
+          </button>
+        </div>
+
+        <!-- VIDEO SECTION — coming soon message -->
+        <div class="home-video-wrapper">
+          <h3 class="home-video-title">Our Moments Together 🎬</h3>
+          <div class="home-video-container portrait"
+            style="display: flex; align-items: center; justify-content: center; background: #2d1b33; padding: 2rem; text-align: center;">
+            <p style="color: #fff; font-family: var(--font-hand); font-size: 1.5rem; line-height: 1.4;">Here I'll make a
+              crazy video of us...<br>Stay tuned! ✨</p>
+          </div>
+        </div>
+
+        <!-- TOGETHER CLOCK — counting from Nov 12 -->
+        <div class="together-clock">
+          <h3 class="together-title">Together For 💕</h3>
+          <div class="clock-display" id="togetherClock">
+            <div class="clock-unit">
+              <span class="clock-num" id="clockYears">0</span>
+              <span class="clock-label">years</span>
+            </div>
+            <div class="clock-unit">
+              <span class="clock-num" id="clockMonths">0</span>
+              <span class="clock-label">months</span>
+            </div>
+            <div class="clock-unit">
+              <span class="clock-num" id="clockDays">0</span>
+              <span class="clock-label">days</span>
+            </div>
+            <div class="clock-unit">
+              <span class="clock-num" id="clockHours">0</span>
+              <span class="clock-label">hours</span>
+            </div>
+            <div class="clock-unit">
+              <span class="clock-num" id="clockMins">0</span>
+              <span class="clock-label">mins</span>
+            </div>
+            <div class="clock-unit">
+              <span class="clock-num" id="clockSecs">0</span>
+              <span class="clock-label">secs</span>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Music Section -->
-    <section id="music" class="section hidden fade-section">
-      <h2>Our Music</h2>
-      <div id="songList" class="song-list"></div>
+    <!-- ═══════════════════════════════════════════
+         PAGE 4: VALENTINE WEEK
+    ═══════════════════════════════════════════ -->
+    <section id="valentine-section" class="page valentine-section">
+      <div class="page-inner page-scrollable">
+        <h2 class="section-title">Valentine Week 💖</h2>
+        <p class="section-subtitle">Tap each envelope to read your love letter</p>
+        <div class="valentine-grid">
+          <button class="envelope-card" data-day="rose" data-date="Feb 7">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">🌹</span><span class="envelope-label">Rose
+                  Day</span><span class="envelope-date">Feb 7</span></div>
+            </div>
+          </button>
+          <button class="envelope-card" data-day="propose" data-date="Feb 8">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">💍</span><span class="envelope-label">Propose
+                  Day</span><span class="envelope-date">Feb 8</span></div>
+            </div>
+          </button>
+          <button class="envelope-card" data-day="chocolate" data-date="Feb 9">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">🍫</span><span class="envelope-label">Chocolate
+                  Day</span><span class="envelope-date">Feb 9</span></div>
+            </div>
+          </button>
+          <button class="envelope-card" data-day="teddy" data-date="Feb 10">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">🧸</span><span class="envelope-label">Teddy
+                  Day</span><span class="envelope-date">Feb 10</span></div>
+            </div>
+          </button>
+          <button class="envelope-card" data-day="promise" data-date="Feb 11">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">🤞</span><span class="envelope-label">Promise
+                  Day</span><span class="envelope-date">Feb 11</span></div>
+            </div>
+          </button>
+          <button class="envelope-card" data-day="hug" data-date="Feb 12">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">🤗</span><span class="envelope-label">Hug
+                  Day</span><span class="envelope-date">Feb 12</span></div>
+            </div>
+          </button>
+          <button class="envelope-card" data-day="kiss" data-date="Feb 13">
+            <div class="envelope">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">💋</span><span class="envelope-label">Kiss
+                  Day</span><span class="envelope-date">Feb 13</span></div>
+            </div>
+          </button>
+          <button class="envelope-card special" data-day="valentine" data-date="Feb 14">
+            <div class="envelope envelope-special">
+              <div class="envelope-flap"></div>
+              <div class="envelope-body"><span class="envelope-icon">💝</span><span class="envelope-label">Valentine's
+                  Day</span><span class="envelope-date">Feb 14</span></div>
+            </div>
+          </button>
+        </div>
+      </div>
     </section>
 
-    <!-- Achievements -->
-    <section id="achievements" class="section hidden fade-section">
-      <h2>Your Achievements</h2>
-      <div class="achievements-container" id="achList"></div>
+    <!-- VALENTINE LETTER MODAL -->
+    <div class="letter-modal" id="letterModal">
+      <div class="letter-overlay" id="letterOverlay"></div>
+      <div class="letter-container" id="letterContainer">
+        <button class="letter-close" id="letterClose" aria-label="Close letter">✕</button>
+        <div class="letter-stickers-top" id="letterStickersTop"></div>
+        <div class="letter-paper" id="letterPaper">
+          <div class="letter-header" id="letterHeader"></div>
+          <div class="letter-body" id="letterBody"></div>
+          <div class="letter-signature">With all my love ❤️</div>
+        </div>
+        <div class="letter-photos" id="letterPhotos"></div>
+        <div class="letter-stickers-bottom" id="letterStickersBottom"></div>
+        <div class="letter-effects" id="letterEffects"></div>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════
+         PAGE 5: PHOTO BOOTH
+    ═══════════════════════════════════════════ -->
+    <section id="photobooth-section" class="page photobooth-section">
+      <div class="page-inner page-scrollable">
+        <h2 class="section-title booth-title">Photo Booth 📸</h2>
+
+        <div class="booth-machine" id="boothMachine">
+          <!-- Delivery slot -->
+          <div class="booth-delivery-slot">
+            <div class="booth-delivery-label">PHOTOS DELIVERED HERE ⬇️</div>
+          </div>
+
+          <!-- Main display -->
+          <div class="booth-display-frame">
+            <div class="booth-screen" id="boothScreen">
+              <!-- Camera fills the whole frame -->
+              <video id="cameraPreview" autoplay playsinline muted></video>
+              <canvas id="cameraCanvas" style="display:none;"></canvas>
+
+              <!-- Start buttons (shown before camera is active) -->
+              <div class="booth-start-btns" id="boothStartBtns">
+                <button class="booth-action-btn" id="btnTakePhoto">take photo 📷</button>
+                <button class="booth-action-btn" id="btnUploadPhoto">upload photo ⬆️</button>
+                <input type="file" id="photoUploadInput" accept="image/*" multiple style="display:none;" />
+              </div>
+
+              <!-- Countdown overlay (on top of camera) -->
+              <div class="booth-countdown" id="boothCountdown">
+                <span id="countdownNumber">3</span>
+              </div>
+
+              <!-- Flash effect -->
+              <div class="booth-flash" id="boothFlash"></div>
+
+              <!-- Photo counter -->
+              <div class="booth-photo-counter" id="boothPhotoCounter">
+                <span id="photoCounterText"></span>
+              </div>
+            </div>
+
+            <!-- Frame arrows -->
+            <button class="booth-arrow booth-arrow-left" id="frameLeft" aria-label="Previous frame">‹</button>
+            <button class="booth-arrow booth-arrow-right" id="frameRight" aria-label="Next frame">›</button>
+          </div>
+
+          <!-- Filter toggle -->
+          <div class="booth-filter-toggle">
+            <span class="filter-label">b&w</span>
+            <div class="toggle-switch" id="filterToggle" role="switch" aria-checked="false"
+              aria-label="Toggle B&W or Color">
+              <div class="toggle-knob"></div>
+            </div>
+            <span class="filter-label">color</span>
+          </div>
+
+          <!-- Instructions -->
+          <div class="booth-instructions">
+            <div class="instruction-step">
+              <span class="step-number">1</span>
+              <p>Choose b&w or color with the toggle</p>
+            </div>
+            <div class="instruction-step">
+              <span class="step-number">2</span>
+              <p>Choose a frame using the arrows</p>
+            </div>
+            <div class="instruction-step">
+              <span class="step-number">3</span>
+              <p>Press the green button to take 4 photos</p>
+            </div>
+            <div class="booth-select-panel">
+              <span class="select-label">select</span>
+              <button class="booth-green-btn" id="boothGreenBtn" aria-label="Capture"><span
+                  class="green-dot"></span></button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PHOTO STRIP OUTPUT -->
+        <div class="photostrip-output" id="photostripOutput" style="display:none;">
+          <div class="photostrip-header">your photostrip! ↩</div>
+          <div class="photostrip-wrapper">
+            <canvas id="photostripCanvas"></canvas>
+          </div>
+          <div class="photostrip-tools">
+            <span class="tag-me">tag me 😊</span>
+            <button class="scissor-btn" id="scissorBtn" aria-label="Cut a photo">✂️</button>
+          </div>
+          <div class="photostrip-actions">
+            <button class="strip-action-btn" id="btnDownload">⬇ download</button>
+            <button class="strip-action-btn" id="btnShare">⤴ share</button>
+            <button class="strip-action-btn" id="btnPrint">🖨 print</button>
+            <button class="strip-action-btn" id="btnRestart">🔄 restart</button>
+          </div>
+        </div>
+
+        <!-- Scissor cut modal -->
+        <div class="scissor-modal" id="scissorModal" style="display:none;">
+          <div class="scissor-overlay"></div>
+          <div class="scissor-content">
+            <h3>Choose a photo to cut ✂️</h3>
+            <div class="scissor-photos" id="scissorPhotos"></div>
+            <button class="btn-romantic" id="scissorCancel">Cancel</button>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Time Capsule -->
-    <section id="timecapsule" class="section hidden fade-section">
-      <h2>Time Capsule</h2>
-      <div id="capsuleContent" class="capsule-box"></div>
+    <!-- ═══════════════════════════════════════════
+         PAGE 6: SCRATCH CARDS
+    ═══════════════════════════════════════════ -->
+    <section id="scratch-section" class="page scratch-section">
+      <div class="page-inner page-scrollable">
+        <h2 class="section-title">Surprise Gifts 🎁</h2>
+        <p class="section-subtitle">Scratch each card to reveal your surprise!</p>
+        <div class="scratch-grid">
+          <div class="scratch-card" data-reward="Movie Date together 🍿🎬">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">🍿</span><span
+                class="scratch-reward-text">Movie Date together 🎬</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Lunch Date Together😋😋">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">💌</span><span
+                class="scratch-reward-text">Lunch Date Together😋😋</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Secret surprise date 🤫💕">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">🤫</span><span
+                class="scratch-reward-text">Secret surprise date 💕</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Unlimited hugs coupon 🤗">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">🤗</span><span
+                class="scratch-reward-text">Unlimited hugs coupon</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Unlimited Kissies coupon 💋">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">💋</span><span
+                class="scratch-reward-text">Unlimited Kissies coupon 💋</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="A Coffee/Hot Chocolate Date ☕">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">☕</span><span class="scratch-reward-text">A
+                Coffee/Hot Chocolate Date ☕</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Princess Treatment Day 👑">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">👑</span><span
+                class="scratch-reward-text">Princess Treatment Day 👑</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Chance to Whatever you say i'll say YES 🌕">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">🌕</span><span
+                class="scratch-reward-text">Chance to Whatever you say i'll say YES 🌕</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+          <div class="scratch-card" data-reward="Okay so Many more to be added Further 😘😄">
+            <div class="scratch-reveal"><span class="scratch-reward-icon">😄</span><span
+                class="scratch-reward-text">Okay so Many more to be added Further 😘😄</span></div>
+            <canvas class="scratch-canvas" width="280" height="200"></canvas>
+            <div class="scratch-label">Scratch Me 🎁</div>
+          </div>
+        </div>
+      </div>
     </section>
 
-    <!-- Memory Gallery -->
-    <section id="gallery" class="section hidden fade-section">
-      <h2>Memory Gallery</h2>
-      <div id="galleryGrid" class="gallery-grid"></div>
+    <!-- ═══════════════════════════════════════════
+         PAGE 7: ANNIVERSARY / FINAL MESSAGE
+    ═══════════════════════════════════════════ -->
+    <section id="anniversary-section" class="page anniversary-section">
+      <div class="page-inner page-scrollable">
+        <div class="sparkle-container" aria-hidden="true" id="sparkleContainer"></div>
+        <h2 class="anniversary-title">To My Forever ∞</h2>
+        <div class="anniversary-letter">
+          <p>From the very first moment I saw you, I knew my life was about to change forever. You are my sunrise, my
+            calm, my adventure, and my home.</p>
+          <p>Every second with you feels like a gift I don't deserve but am so grateful for. You make the ordinary
+            extraordinary, and you fill my world with colors I never knew existed.</p>
+          <p>I can't wait to make more memories with you and to continue growing together. You are my best friend, my
+            lover, and my everything. I am so lucky to have you in my life.</p>
+          <p>I promise to love you endlessly - through every season, every storm, and every beautiful sunrise we'll
+            share together.</p>
+          <p>Happy Valentine's Day & Happy Anniversary, my love. Here's to us - forever and always. 💕</p>
+          <p><br></p>
+          <p>Many More thoughts and ander ki bhaavnaye to be added... 😊😊</p>
+        </div>
+        <div class="anniversary-emojis" aria-hidden="true">
+          <span class="float-emoji">💗</span><span class="float-emoji">🥰</span><span class="float-emoji">💫</span><span
+            class="float-emoji">🌹</span>
+          <span class="float-emoji">💝</span><span class="float-emoji">✨</span><span class="float-emoji">💕</span><span
+            class="float-emoji">🦋</span>
+        </div>
+        <div class="anniversary-signature">
+          <p>Forever yours,</p>
+          <p class="signature-name">— Your Love ❤️</p>
+        </div>
+      </div>
     </section>
 
-    <!-- Puzzle Section -->
-    <section id="puzzle" class="section hidden fade-section">
-      <h2>Surprise Puzzle</h2>
-      <p>Solve this to unlock your surprise:</p>
-      <div id="puzzleContainer" class="puzzle-container"></div>
-    </section>
-
-    <!-- Password-Protected Surprise Section -->
-    <section id="passwordSection" class="section hidden fade-section">
-      <h2>Secret Surprise</h2>
-      <p>Enter the password to unlock your final surprise.</p>
-      <input type="password" id="passwordInput" placeholder="Enter password..." />
-      <button id="passwordBtn">Unlock</button>
-      <p id="passwordError" class="error hidden">Incorrect password, my love. Try again ❤️</p>
-    </section>
-
-    <!-- Final Surprise Content (Hidden until password success) -->
-    <section id="secretContent" class="section hidden fade-section">
-      <h2>Your Secret Surprise</h2>
-      <p>This is something only meant for you, my love. Thank you for being my everything.</p>
-      <p>I love you endlessly, today and forever.</p>
-    </section>
-
-    <!-- Final Thank You Screen -->
-    <section id="final" class="section hidden fade-section">
-      <h2>Thank You for 3 Beautiful Years</h2>
-      <p>You mean the world to me.</p>
-      <p>Tap this NFC tag again next year for our next chapter.</p>
-    </section>
-
-  </main>
+  </div><!-- /main-site -->
 
   <script src="script.js"></script>
 </body>
+
 </html>
