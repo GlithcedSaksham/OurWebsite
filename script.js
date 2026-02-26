@@ -767,6 +767,8 @@ const ScratchCards = (() => {
       }
     }
 
+    let hasStartedScratching = false;
+
     function getPos(e) {
       const r = canvas.getBoundingClientRect();
       return {
@@ -776,6 +778,14 @@ const ScratchCards = (() => {
     }
 
     function scratch(pos) {
+      if (!hasStartedScratching) {
+        hasStartedScratching = true;
+        const label = card.querySelector('.scratch-label');
+        if (label) {
+          label.style.transition = 'opacity 0.3s ease-out';
+          label.style.opacity = '0';
+        }
+      }
       ctx.globalCompositeOperation = 'destination-out';
       ctx.beginPath();
       ctx.arc(pos.x, pos.y, 24, 0, Math.PI * 2);
@@ -789,11 +799,11 @@ const ScratchCards = (() => {
       for (let i = 3; i < d.data.length; i += 4) {
         if (d.data[i] === 0) t++;
       }
-      if (t / (canvas.width * canvas.height) > 0.3) {
+      if (t / (canvas.width * canvas.height) > 0.25) {
         revealed = true;
 
         // Add special scratch fade out transition
-        canvas.style.transition = 'opacity 0.6s ease-out, transform 0.6s ease-out';
+        canvas.style.transition = 'opacity 0.5s ease-out, transform 0.5s ease-out';
         canvas.style.opacity = '0';
         canvas.style.transform = 'scale(1.1)';
 
